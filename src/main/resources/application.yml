@@ -1,0 +1,36 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+
+  cloud:
+    config:
+      server:
+        git:
+          # Option 1: Public GitHub repository
+          uri: https://github.com/semi-conductors/rentmate-config-repo.git
+          default-label: master
+          clone-on-start: true
+
+          # Option 2: Private GitHub repository (with authentication)
+          # uri: https://github.com/your-org/rentmate-config-repo.git
+          # username: ${GIT_USERNAME}
+          # password: ${GIT_PASSWORD}  # Use Personal Access Token
+          # default-label: master
+
+          # Search paths (optional - for organized structure)
+          search-paths:
+            - '{application}'
+            - 'services/{application}'
+
+# Optional: Actuator endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,refresh
+  endpoint:
+    health:
+      show-details: always
